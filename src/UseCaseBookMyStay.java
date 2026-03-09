@@ -1,5 +1,6 @@
 package BookMyStay;
 
+import java.util.HashMap;
 abstract class Room {
     int beds;
     int size;
@@ -36,30 +37,49 @@ class SuiteRoom extends Room {
     }
 }
 
+class RoomInventory {
+
+    private HashMap<String, Integer> inventory;
+
+    public RoomInventory() {
+        inventory = new HashMap<>();
+
+        inventory.put("Single", 5);
+        inventory.put("Double", 3);
+        inventory.put("Suite", 2);
+    }
+
+    public int getAvailability(String roomType) {
+        return inventory.get(roomType);
+    }
+
+    public void updateAvailability(String roomType, int count) {
+        inventory.put(roomType, count);
+    }
+}
+
 public class UseCaseBookMyStay {
 
     public static void main(String[] args) {
 
-        System.out.println("Hotel Room Initialization\n");
+        System.out.println("Hotel Room Inventory Status\n");
 
         Room single = new SingleRoom();
         Room dbl = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        int singleAvailable = 5;
-        int doubleAvailable = 3;
-        int suiteAvailable = 2;
+        RoomInventory inventory = new RoomInventory();
 
         System.out.println("Single Room:");
         single.displayDetails();
-        System.out.println("Available: " + singleAvailable + "\n");
+        System.out.println("Available Rooms: " + inventory.getAvailability("Single") + "\n");
 
         System.out.println("Double Room:");
         dbl.displayDetails();
-        System.out.println("Available: " + doubleAvailable + "\n");
+        System.out.println("Available Rooms: " + inventory.getAvailability("Double") + "\n");
 
         System.out.println("Suite Room:");
         suite.displayDetails();
-        System.out.println("Available: " + suiteAvailable);
+        System.out.println("Available Rooms: " + inventory.getAvailability("Suite"));
     }
 }
